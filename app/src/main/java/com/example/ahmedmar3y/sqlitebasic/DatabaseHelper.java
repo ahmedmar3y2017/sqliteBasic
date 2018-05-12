@@ -115,7 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.rawQuery("SELECT * FROM " + TABLE_NAME, null);
         cursor.close();
-        ;
+
 
         return cursor.getCount();
 
@@ -124,7 +124,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // update person
 
+    public int UpdatePerson(person person) {
+        SQLiteDatabase sqLiteDatabase = this.getWritableDatabase();
+
+
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("name", person.getName());
+        contentValues.put("phone", person.getPhoneNumber());
+        contentValues.put("address", person.getAddress());
+
+        int updated = sqLiteDatabase.update(TABLE_NAME, contentValues, "id=?", new String[]{String.valueOf(person.getId())});
+
+
+        return updated;
+    }
+
 
     // delete person
+
+    public void deletePerson(int id) {
+
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        sqLiteDatabase.delete(TABLE_NAME, "id=?", new String[]{String.valueOf(sqLiteDatabase)});
+        sqLiteDatabase.close();
+
+    }
+
 
 }
